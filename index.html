@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="keywords" content="" />
+        <meta name="description" content="" />
+        <title>Mirror</title>
+        <script src="/node_modules/angular/angular.js"></script>
+        <link href="css/fontawesome.min.css" rel="stylesheet" />
+
+        <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300, 400,700"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="css/mirror.css" type="text/css" />
+        <!--[if lt IE 9]>
+            <script src="assets/js/html5shiv.js"></script>
+            <script src="assets/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="wrapperBg">
+            <div class="container">
+                <div class="formBg">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="logo">
+                                <a href="">
+                                    <img
+                                        src="img/logo.png"
+                                        class="responsive-img"
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form id="myForm">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="name"
+                                        placeholder="Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label for="mob">Mobile</label>
+                                    <input
+                                        type="tel"
+                                        class="form-control"
+                                        id="mob"
+                                        placeholder="Mobile"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="area">Area</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="area"
+                                        placeholder="Area/Village"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="item">Item</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="item"
+                                        placeholder="Item"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="quantity">Quantity </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="quantity"
+                                        placeholder="Quantity"
+                                        onkeyup="multiply();"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="price">Price </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="price"
+                                        placeholder="Price"
+                                        onkeyup="multiply();"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="total">Total </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="total"
+                                        placeholder="total"
+                                        onkeyup="sum();"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="paid">Paid </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="paid"
+                                        placeholder="Paid"
+                                        onkeyup="sum();"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pending">Pending </label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="pending"
+                                        placeholder="Pending"
+                                    />
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onclick="myFunction()"
+                                >
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <script>
+            function multiply() {
+                var a = document.getElementById("quantity").value;
+                var b = document.getElementById("price").value;
+                var result = a * b;
+                document.getElementById("total").value = result;
+                // console.log(result);
+            }
+
+            function sum() {
+                var total1 = document.getElementById("total").value;
+                var paid1 = document.getElementById("paid").value;
+                var result1 = total1 - paid1;
+                document.getElementById("pending").value = result1;
+                // console.log(result);
+            }
+
+            function myFunction() {
+                var name = document.getElementById("name").value;
+                var mob = document.getElementById("mob").value;
+                var area = document.getElementById("area").value;
+                var item = document.getElementById("item").value;
+                var quantity = document.getElementById("quantity").value;
+                var price = document.getElementById("price").value;
+                var paid = document.getElementById("paid").value;
+                var pending = document.getElementById("pending").value;
+                var total = document.getElementById("total").value;
+
+                var x = [];
+                x.push({
+                    name: name,
+                    mobile: mob,
+                    area: area,
+                    item: item,
+                    quantity: quantity,
+                    price: price,
+                    paid: paid,
+                    pendingPrice: pending,
+                    total: total
+                });
+
+                const url = "http://localhost:8586/userregistration";
+                const data = x;
+                console.log(data);
+                data.forEach(function(element) {
+                    console.log("element", element);
+                    $.post(url, element, function(data, status) {
+                        console.log(`${element} and status is ${status}`);
+                    });
+                });
+
+                //console.log("result", x);
+            }
+        </script>
+    </body>
+</html>
